@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragebogen Muttermilchspende</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 9.5pt;
+            line-height: 1.3;
+            color: #000;
+            background: white;
+        }
+        
+        .container {
+            max-width: 21cm;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .header h1 {
+            font-size: 20pt;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 11pt;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 9pt;
+        }
+        
+        .section {
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .form-group-full {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 3px;
+            font-size: 9pt;
+            color: #333;
+        }
+        
+        .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 5px 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 9pt;
+            background: white;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 5px 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 9pt;
+            min-height: 50px;
+            resize: vertical;
+            background: white;
+            font-family: inherit;
+        }
+        
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            accent-color: #667eea;
+        }
+        
+        .measurements-box {
+            border: 2px dashed #667eea;
+            padding: 12px;
+            background: white;
+            margin-top: 8px;
+            border-radius: 6px;
+        }
+        
+        .measurements-box h4 {
+            font-size: 10pt;
+            color: #667eea;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .unit {
+            font-size: 8pt;
+            color: #666;
+            font-style: italic;
+            margin-left: 3px;
+        }
+        
+        .inline-input {
+            display: inline-block;
+            width: 120px;
+            margin: 0 5px;
+        }
+        
+        .signature-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #ccc;
+            page-break-inside: avoid;
+        }
+        
+        .signature-line {
+            border-top: 1px solid #333;
+            width: 220px;
+            margin-top: 40px;
+            display: inline-block;
+        }
+        
+        .footer {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 8pt;
+            text-align: center;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .header {
+                background: #667eea !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+        
+        .subsection {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed #ccc;
+        }
+        
+        .subsection-title {
+            font-weight: 600;
+            font-size: 9.5pt;
+            color: #555;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤱 Fragebogen zur Muttermilchspende</h1>
+            <p>FGF23-Studie • Leipzig Milchbank</p>
+        </div>
+        
+        <div class="info-box">
+            <strong>Wichtige Information:</strong> Bitte füllen Sie diesen Fragebogen bei jeder Milchspende sorgfältig aus. Alle Angaben werden streng vertraulich behandelt und ausschließlich für wissenschaftliche Zwecke verwendet.
+        </div>
+        
+        <!-- Section 1: Identification -->
+        <div class="section">
+            <h3 class="section-title">1. Identifikation und Spendendatum</h3>
+            
+            <div class="grid-3">
+                <div class="form-group">
+                    <label>Studien-ID <span class="required">*</span></label>
+                    <input type="text" name="study_id" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Spendendatum <span class="required">*</span></label>
+                    <input type="date" name="donation_date" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Uhrzeit der Gewinnung</label>
+                    <input type="text" name="collection_time" placeholder="z.B. 09:30">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 2: Maternal Demographics -->
+        <div class="section">
+            <h3 class="section-title">2. Angaben zur Mutter</h3>
+            
+            <div class="grid-4">
+                <div class="form-group">
+                    <label>Alter <span class="required">*</span></label>
+                    <input type="number" name="maternal_age" min="18" max="50">
+                    <span class="unit">Jahre</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Körpergröße</label>
+                    <input type="number" name="height" step="0.1">
+                    <span class="unit">cm</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>Aktuelles Gewicht</label>
+                    <input type="number" name="weight" step="0.1">
+                    <span class="unit">kg</span>
+                </div>
+                
+                <div class="form-group">
+                    <label>BMI vor Schwangerschaft</label>
+                    <input type="number" name="pre_pregnancy_bmi" step="0.1">
+                    <span class="unit">kg/m²</span>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Anzahl vorheriger Geburten (Parität)</label>
+                    <select name="parity">
+                        <option value="">Bitte wählen</option>
+                        <option value="0">0 (Erstgebärende)</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4+">4 oder mehr</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Kontakt-E-Mail (optional)</label>
+                    <input type="text" name="email" placeholder="ihre.email@beispiel.de">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 3: Pregnancy & Birth -->
+        <div class="section">
+            <h3 class="section-title">3. Schwangerschaft und Geburt</h3>
+            
+            <div class="grid-3">
+                <div class="form-group">
+                    <label>Geburtsdatum des Kindes <span class="required">*</span></label>
+                    <input type="date" name="delivery_date">
+                </div>
+                
+                <div class="form-group">
+                    <label>Gestationsalter bei Geburt</label>
+                    <input type="text" name="gestational_age" placeholder="z.B. 38+4 SSW">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tage post partum</label>
+                    <input type="number" name="days_postpartum">
+                    <span class="unit">Tage</span>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Geburtsmodus</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="delivery_mode" value="spontan"> Spontangeburt
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="delivery_mode" value="sectio"> Kaiserschnitt
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="delivery_mode" value="vakuum"> Vakuumextraktion
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="delivery_mode" value="forceps"> Forceps
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Schwangerschaftskomplikationen</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="complications" value="gest_diabetes"> Gestationsdiabetes
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="complications" value="preeclampsia"> Präeklampsie
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="complications" value="hypertension"> Hypertonie
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="complications" value="none"> Keine
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 4: Lactation -->
+        <div class="section">
+            <h3 class="section-title">4. Stillperiode und Laktation</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Laktationsstadium <span class="required">*</span></label>
+                    <select name="lactation_stage">
+                        <option value="">Bitte wählen</option>
+                        <option value="kolostrum">Kolostrum (Tag 1-5)</option>
+                        <option value="uebergangsmilch">Übergangsmilch (Tag 6-14)</option>
+                        <option value="reife_frueh">Reife Milch - früh (2-6 Wo)</option>
+                        <option value="reife_mittel">Reife Milch - mittel (6-12 Wo)</option>
+                        <option value="reife_spaet">Reife Milch - spät (>12 Wo)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Stillmahlzeiten pro Tag</label>
+                    <input type="number" name="feeding_frequency" min="0" max="20">
+                    <span class="unit">Mahlzeiten/Tag</span>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Stillen Sie ausschließlich?</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="exclusive_bf" value="ja"> Ja, nur Muttermilch
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="exclusive_bf" value="teilweise"> Teilweise (mit Formula)
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="exclusive_bf" value="abgepumpt"> Nur abgepumpte Milch
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Zeitpunkt der letzten Stillmahlzeit/Abpumpen vor dieser Spende</label>
+                <input type="text" name="last_feeding" placeholder="z.B. vor 3 Stunden">
+            </div>
+        </div>
+        
+        <!-- Section 5: Health & Lifestyle - COMPREHENSIVE -->
+        <div class="section">
+            <h3 class="section-title">5. Gesundheit und Lebensstil</h3>
+            
+            <!-- Chronic Conditions -->
+            <div class="form-group-full">
+                <label>Chronische Erkrankungen</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="conditions" value="diabetes"> Diabetes mellitus
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="conditions" value="thyroid"> Schilddrüsenerkrankung
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="conditions" value="kidney"> Nierenerkrankung
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="conditions" value="autoimmune"> Autoimmunerkrankung
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="conditions" value="none"> Keine
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Supplementation Subsection -->
+            <div class="subsection">
+                <div class="subsection-title">📋 Nahrungsergänzungsmittel</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vitamin-D-Supplementierung</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="vitamin_d" value="ja"> Ja
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="vitamin_d" value="nein"> Nein
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Falls ja, Dosierung</label>
+                        <input type="text" name="vitamin_d_dose" placeholder="z.B. 1000 IE/Tag">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Seit wann?</label>
+                        <input type="text" name="vitamin_d_duration" placeholder="z.B. 3 Monate">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Calcium-Supplementierung</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="calcium" value="ja"> Ja
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="calcium" value="nein"> Nein
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Falls ja, Dosierung</label>
+                        <input type="text" name="calcium_dose" placeholder="z.B. 500 mg/Tag">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Eisen-Supplementierung</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="iron" value="ja"> Ja
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="iron" value="nein"> Nein
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Falls ja, Dosierung</label>
+                        <input type="text" name="iron_dose" placeholder="z.B. 40 mg/Tag">
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label>Weitere Nahrungsergänzungsmittel</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="multivitamin"> Multivitaminpräparat
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="omega3"> Omega-3-Fettsäuren
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="folsaeure"> Folsäure
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="magnesium"> Magnesium
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="jod"> Jod
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="supplements" value="andere"> Andere: _____________
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sun Exposure Subsection -->
+            <div class="subsection">
+                <div class="subsection-title">☀️ Sonnenexposition</div>
+                
+                <div class="form-group-full">
+                    <label>Wie oft waren Sie in der letzten Woche draußen im Freien? (bei Tageslicht)</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="sun_frequency" value="keine"> Keine/minimal
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="sun_frequency" value="1-2x"> 1-2x pro Woche
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="sun_frequency" value="3-5x"> 3-5x pro Woche
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="sun_frequency" value="taeglich"> Täglich
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Durchschnittliche Zeit im Freien pro Tag</label>
+                        <input type="text" name="outdoor_time" placeholder="z.B. 1 Stunde">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Verwendung von Sonnenschutzmittel</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="sunscreen" value="immer"> Ja, immer
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="sunscreen" value="manchmal"> Manchmal
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="sunscreen" value="nie"> Nein
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label>Jahreszeit der Milchspende (wird berücksichtigt für Vitamin-D-Synthese)</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="season" value="winter"> Winter (Dez-Feb)
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="season" value="fruehling"> Frühling (Mär-Mai)
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="season" value="sommer"> Sommer (Jun-Aug)
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="season" value="herbst"> Herbst (Sep-Nov)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Diet Subsection -->
+            <div class="subsection">
+                <div class="subsection-title">🍽️ Ernährung</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ernährungsweise</label>
+                        <select name="diet">
+                            <option value="">Bitte wählen</option>
+                            <option value="omnivor">Omnivor (Mischkost)</option>
+                            <option value="vegetarisch">Vegetarisch</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="pescetarisch">Pescetarisch</option>
+                            <option value="andere">Andere</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Milchprodukte-Konsum</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="dairy" value="taeglich"> Täglich
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="dairy" value="mehrmals"> Mehrmals/Woche
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="dairy" value="selten"> Selten
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="dairy" value="nie"> Nie
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lifestyle -->
+            <div class="subsection">
+                <div class="subsection-title">🚭 Lebensstil</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Rauchen</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="smoking" value="nein"> Nein
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="smoking" value="ja"> Ja
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="smoking" value="frueher"> Früher
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Alkoholkonsum während Stillzeit</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="alcohol" value="nein"> Nein
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="alcohol" value="gelegentlich"> Gelegentlich
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Aktuelle Medikamenteneinnahme (inkl. alle Medikamente)</label>
+                <textarea name="medications" placeholder="Bitte alle Medikamente auflisten"></textarea>
+            </div>
+        </div>
+        
+        <!-- Section 6: Infant Information -->
+        <div class="section">
+            <h3 class="section-title">6. Angaben zum Kind</h3>
+            
+            <div class="form-group-full">
+                <label>Geschlecht des Kindes</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="infant_sex" value="maennlich"> Männlich
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="infant_sex" value="weiblich"> Weiblich
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="infant_sex" value="divers"> Divers
+                    </label>
+                </div>
+            </div>
+            
+            <div class="measurements-box">
+                <h4>📏 Geburtsmaße</h4>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Geburtsgewicht</label>
+                        <input type="number" name="birth_weight" step="1">
+                        <span class="unit">Gramm</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Geburtslänge</label>
+                        <input type="number" name="birth_length" step="0.1">
+                        <span class="unit">cm</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Kopfumfang bei Geburt</label>
+                        <input type="number" name="birth_head" step="0.1">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="measurements-box" style="margin-top: 12px;">
+                <h4>📊 Aktuelle Maße zum Spendendatum <span class="required">*</span></h4>
+                <div class="grid-3">
+                    <div class="form-group">
+                        <label>Aktuelles Gewicht</label>
+                        <input type="number" name="current_weight" step="1" required>
+                        <span class="unit">Gramm</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Aktuelle Länge</label>
+                        <input type="number" name="current_length" step="0.1" required>
+                        <span class="unit">cm</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Aktueller Kopfumfang</label>
+                        <input type="number" name="current_head" step="0.1" required>
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 10px;">
+                    <label>Datum der Messung</label>
+                    <input type="date" name="measurement_date">
+                </div>
+            </div>
+            
+            <div class="form-group-full" style="margin-top: 10px;">
+                <label>Gesundheitszustand des Kindes</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="infant_health" value="gesund"> Gesund
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="infant_health" value="erkrankung"> Bestehende Erkrankung
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Falls Erkrankung, bitte spezifizieren</label>
+                <textarea name="infant_health_details" placeholder="Bitte Erkrankungen oder gesundheitliche Besonderheiten beschreiben"></textarea>
+            </div>
+        </div>
+        
+        <!-- Section 7: Milk Collection -->
+        <div class="section">
+            <h3 class="section-title">7. Details zur Milchgewinnung</h3>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Gewinnungsmethode</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="collection_method" value="elektrisch"> Elektrische Pumpe
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="collection_method" value="manuell"> Manuelle Pumpe
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="collection_method" value="hand"> Handgewinnung
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Gesammelte Milchmenge</label>
+                    <input type="number" name="milk_volume" step="1">
+                    <span class="unit">ml</span>
+                </div>
+            </div>
+            
+            <div class="form-group-full">
+                <label>Brust (falls von einer Seite)</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="breast_side" value="links"> Links
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="breast_side" value="rechts"> Rechts
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="breast_side" value="beide"> Beide
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 8: Additional Notes -->
+        <div class="section">
+            <h3 class="section-title">8. Zusätzliche Anmerkungen</h3>
+            
+            <div class="form-group-full">
+                <label>Besondere Vorkommnisse oder Anmerkungen</label>
+                <textarea name="additional_notes" placeholder="z.B. Erkältung, Stress, besondere Ernährung, ungewöhnliche Aktivitäten, etc." style="min-height: 60px;"></textarea>
+            </div>
+        </div>
+        
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <p style="font-size: 9pt; margin-bottom: 10px; font-weight: 600;">
+                Einverständniserklärung
+            </p>
+            <p style="font-size: 9pt; margin-bottom: 35px; line-height: 1.4;">
+                Hiermit bestätige ich die Richtigkeit meiner Angaben und erlaube die Verwendung meiner Milchspende sowie der erhobenen Daten ausschließlich für wissenschaftliche Zwecke im Rahmen der FGF23-Studie der Leipzig Milchbank. Ich wurde über die Studie informiert und hatte die Möglichkeit, Fragen zu stellen.
+            </p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="flex: 1;">
+                    <div class="signature-line"></div>
+                    <p style="font-size: 8pt; margin-top: 5px; font-weight: 600;">Ort, Datum</p>
+                </div>
+                
+                <div style="flex: 1; margin-left: 40px;">
+                    <div class="signature-line"></div>
+                    <p style="font-size: 8pt; margin-top: 5px; font-weight: 600;">Unterschrift der Spenderin</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Leipzig Milchbank • FGF23-Studie</strong></p>
+            <p style="margin-top: 5px;">Bei Fragen wenden Sie sich bitte an: leipzig-milchbank@studie.de | Tel: +49 (0) 341 XXX-XXXX</p>
+            <p style="margin-top: 5px;">Vielen Dank für Ihre wertvolle Unterstützung! 💙</p>
+        </div>
+    </div>
+    
+    <script>
+        // Optional: Auto-print when page loads
+        // Uncomment the next line to enable auto-print
+        // window.onload = function() { window.print(); }
+        
+        // Add print button functionality
+        function printForm() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
